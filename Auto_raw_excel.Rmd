@@ -47,7 +47,7 @@ View(CC)
 new_df<- CC %>% spread(key = eventtrial_2, value = acc)  #transform the matrix
 names(new_df)[names(new_df) == "eventtrial_4_1"] <- "event_number" #rename the variable name
 View(new_df)
-write_xlsx(new_df, "/Users/neslihanonay/Desktop/Ulrike_internship/subj01.xlsx")  #save the data frame to the computer. Change path file in the case of need to update. Also, change subj01 to subj02, subj03, etc... for each participant
+write_xlsx(new_df, "/Users/neslihanonay/Desktop/Ulrike_internship/subj101.xlsx")  #save the data frame to the computer. Change path file in the case of need to update. Also, change subj01 to subj02, subj03, etc... for each participant
 ```
 
 For each participant, code should be run. The output can be used to directly apply to model in MATLAB. There needs to be rename the raw file as "A1" OR there needs to be renaming A1 with a raw data file in above code.
