@@ -1,0 +1,52 @@
+---
+title: Data Arrangement for Dependency Models
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Description of the Code
+
+Data is manipulated through the R packages to make it compatible with the script used in MATLAB.
+For that reason, we grouped N (retrieval trials) by M (number of events). Values indicated binary values (1 or 0). 1 indicates that the respondent has correct trial whereas 0 indicates that respondent has incorrect response.
+
+### Input
+
+As an input, we used raw e-prime txt files.
+Raw data contains full information of a session. We deducted it to two parameters (event_number, retrieval_trials) for each participant.
+
+```{r error=TRUE, warning=FALSE}
+install.packages("rprime")
+library("rprime")
+library(splitstackshape)
+library(tidyr)
+install.packages("stringr")
+library("stringr")
+install.packages("tidyverse")
+library(splitstackshape)
+library(dplyr)
+library("writexl") 
+install.packages("writexl")
+```
+
+## Cleaned Data
+For each participant, we need to update two parts: subject name when it is reading, subject name when it is writing.
+
+```{r pressure, echo=TRUE}
+aa<- read_eprime("/Users/neslihanonay/Desktop/Ulrike_internship/Data/Disney/Jeunes_Adultes_01.txt") #here we are reading e-prime files. There needs to be changing pathname. Once it is set, then for each participant changing the subject name is sufficient for code to proceed. For example, changing 01 to 02 for the second participant.
+bb <- FrameList(aa) 
+cc <- to_data_frame(bb) #changing e-prime file format to data frame 
+cc <- select(cc, c('Event', 'Recup.ACC')) #we select relevant variables for the dependency models
+cc <- na.omit(cc) #we deleted trials
+cc<- cSplit(cc, "Event", '_') #data cleaning
+cc <- cSplit(cc, "Event_4", '.jpg') #data cleaning
+dd <- select(cc, c('Event_2', 'Event_4_1','Recup.ACC')) #in order to create matrix, we choose the relevant variables for the model
+names(dd)[names(dd) == "Event_2"] <- "retrieval_trial" #update the variable name
+names(dd)[names(dd) == "Event_4_1"] <- "event_number" #update the variable name
+names(dd)[names(dd) == "Recup.ACC"] <- "accuracy" #update the variable name
+ee<- dd %>% spread(key = retrieval_trial, value = accuracy) #transform the matrix to MxN format
+write_xlsx(ee, "/Users/neslihanonay/Desktop/Ulrike_internship/Data/Model/Disney/subj101_disney.xlsx") #write the data frame to computer. Here one needs to change the pathname to set his/her computer. Also, for each participant, there needs to be change in the file name. For example changing 101 to 102 for the second participant.
+```
+
