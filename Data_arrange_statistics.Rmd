@@ -5,9 +5,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-require(tidyverse)
-require(magittr)
-require(readxl)
+library(tidyverse)
+library(magittr)
+install.packages("magittr")
+library(readxl)
 library(dplyr)
 ```
 
