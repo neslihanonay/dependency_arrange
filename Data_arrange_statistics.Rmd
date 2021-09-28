@@ -1,0 +1,60 @@
+---
+title: "Data_arrange_statistics"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+require(tidyverse)
+require(magittr)
+require(readxl)
+library(dplyr)
+```
+
+## xhe Brief Description of The Code
+
+Below code is intended to arrange the processed data from MATLAB to R/SPSS-compatible environment for the analysis. By this mean, one directly can use the data frame for ANOVA or t-test statistics. The code only includes one age group.
+
+```{r pressure, echo=TRUE}
+path <- "/Users/neslihanonay/Downloads/All_data_-__processed"
+#we need to put the path name where all the files from MATLAB is stored.
+
+url_xlsx <- list.files(path, pattern = "*.xlsx", recursive = TRUE) #here there is a listing of all files with specific extention (xlsx) that we want to merge
+read_xlsx_files <- function(x){
+  df <- read_xlsx(path = paste(path, x, sep = "/"))
+  return(df)
+} #all files are read in once. 
+
+df <- lapply(url_xlsx, read_xlsx_files ) %>%
+  bind_rows() #Files (one file-per subject) is merged into one data frame
+
+event_type <- (x = c("all_data", "emotional", "neutral")) #To be able to do within-subjects analysis for event type, we stored all data. all_data represents the indices from the all the trials which a respondent answered. "emotional" represents only emotional events. "neutral" represents only neutral events.
+
+df <- data.frame(df, event_type) #we created one data frame in which all subjects are here.
+
+subj_number <- (x = c(101, 101, 101, 102, 102, 102, 103, 103, 103, 104, 104, 104, 106, 106, 106,
+                      108, 108,108, 109,109,109)) #We can standardize here after all the data collected and sorter. For example, we can just
+# define with c(101:110) which means creating subject number from 101 to 110.
+df <- data.frame(df , subj_number)
+View(df) 
+attach(df)
+new_all_df <- filter(df,df$event_type=="all_data")
+new_emo_df <- filter(df,df$event_type=="emotional")
+new_neutral_df <- filter(df,df$event_type=="neutral")
+str(new_all_df)
+names(new_all_df)[names(new_all_df) == "data_dependency"] <- "all_data_DataDependency"
+names(new_all_df)[names(new_all_df) == "independent_dependency"] <- "all_data_IndepModelDependency"
+names(new_all_df)[names(new_all_df) == "dependent_dependency"] <- "all_data_DepModelDependency"
+names(new_emo_df)[names(new_emo_df) == "data_dependency"] <- "emotional_DataDependency"
+names(new_emo_df)[names(new_emo_df) == "independent_dependency"] <- "emotional_IndepModelDependency"
+names(new_emo_df)[names(new_emo_df) == "dependent_dependency"] <- "emotional_DepModelDependency"
+names(new_neutral_df)[names(new_neutral_df) == "data_dependency"] <- "neutral_data_DataDependency"
+names(new_neutral_df)[names(new_neutral_df) == "independent_dependency"] <- "neutral_data_IndepModelDependency"
+names(new_neutral_df)[names(new_neutral_df) == "dependent_dependency"] <- "neutral_data_DepModelDependency"
+all <- cbind(new_all_df, new_emo_df, new_neutral_df)
+all <- subset(all, select = -c(event_type, subj_number.1, subj_number.2))
+View(all)
+all = all %>% select(subj_number, everything()) #we moved the variable subj_number to the first order.
+write_xlsx(all, "/Users/neslihanonay/Desktop/Ulrike_internship/Data/Model/ALL_data.xlsx")
+```
+
