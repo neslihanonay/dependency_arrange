@@ -254,7 +254,7 @@ double1 = [M_D;M_Em;M_N]
 rowNames = {'all_data','emotional','neutral'};
 colNames = {'data_dependency','independent_dependency','dependent_dependency'};
 subj109_model = array2table(double1,'RowNames',rowNames,'VariableNames',colNames)
-writetable(subj109_model,'subj109_model_disney.csv')
+writetable(subj109_model,'subj109_model_disney.xlsx')
 
 end
  
