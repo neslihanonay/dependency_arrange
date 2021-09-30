@@ -6,8 +6,8 @@ output: html_document
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(tidyverse)
-library(magittr)
 install.packages("magittr")
+library(magittr)
 library(readxl)
 library(dplyr)
 ```
@@ -19,7 +19,7 @@ IMPORTANT: There are three parts needs to be updated when to run:path in line 22
 
 
 ```{r pressure, echo=TRUE}
-path <- "/Users/neslihanonay/Downloads/All_data_-__processed" UPDATE IS NEEDED BEFORE RUNNING
+path <- "/Users/neslihanonay/Downloads/All_data_-__processed" #UPDATE IS NEEDED BEFORE RUNNING
 #we need to put the path name where all the files from MATLAB is stored.
 
 url_xlsx <- list.files(path, pattern = "*.xlsx", recursive = TRUE) #here there is a listing of all files with specific extention (xlsx) that we want to merge
@@ -37,7 +37,7 @@ df <- data.frame(df, event_type) #we created one data frame in which all subject
 
 subj_number <- (x = c(101, 101, 101, 102, 102, 102, 103, 103, 103, 104, 104, 104, 106, 106, 106,
                       108, 108,108, 109,109,109)) #We can standardize here after all the data collected and sorted. For example, we can just
-# define with c(101:110) which means creating subject number from 101 to 110. UPDATE IS NEEDED BEFORE RUNNING
+# define with c(101:110) which means creating subject number from 101 to 110. #UPDATE IS NEEDED BEFORE RUNNING
 df <- data.frame(df , subj_number)
 View(df) 
 attach(df)
@@ -55,9 +55,10 @@ names(new_neutral_df)[names(new_neutral_df) == "data_dependency"] <- "neutral_da
 names(new_neutral_df)[names(new_neutral_df) == "independent_dependency"] <- "neutral_data_IndepModelDependency"
 names(new_neutral_df)[names(new_neutral_df) == "dependent_dependency"] <- "neutral_data_DepModelDependency"
 all <- cbind(new_all_df, new_emo_df, new_neutral_df)
-all <- subset(all, select = -c(event_type, subj_number.1, subj_number.2))
+all <- all[, !duplicated(colnames(all))]
+all <- subset(all, select = -c(event_type))
 View(all)
 all = all %>% select(subj_number, everything()) #we moved the variable subj_number to the first order.
-write_xlsx(all, "/Users/neslihanonay/Desktop/Ulrike_internship/Data/Model/ALL_data.xlsx") UPDATE IS NEEDED BEFORE RUNNING
+write_xlsx(all, "/Users/neslihanonay/Desktop/Ulrike_internship/Data/Model/ALL_data.xlsx") #UPDATE IS NEEDED BEFORE RUNNING
 ```
 
