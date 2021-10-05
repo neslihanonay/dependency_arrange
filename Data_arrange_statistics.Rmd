@@ -12,7 +12,7 @@ library(readxl)
 library(dplyr)
 ```
 
-## xhe Brief Description of The Code
+## The Brief Description of The Code
 
 Below code is intended to arrange the processed data from MATLAB to R/SPSS-compatible environment for the analysis. By this mean, one directly can use the data frame for ANOVA or t-test statistics. The code only includes one age group.
 IMPORTANT: There are three parts needs to be updated when to run:path in line 22, subj_number in line 38 depending one how many subjects one has. It should be the same number with three units for example; 01, 01, 01, 02, 02, 02...etc. 
