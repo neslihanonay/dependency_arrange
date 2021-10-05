@@ -7,9 +7,10 @@ output: html_document
 library(tidyverse)
 library(tidyverse)
 install.packages("magittr")
-library(magittr)
 library(readxl)
 library(dplyr)
+library(writexl)
+install.packages("writexl")
 ```
 
 ## The Brief Description of The Code
