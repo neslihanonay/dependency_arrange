@@ -23,7 +23,7 @@ IMPORTANT: There are three parts needs to be updated when to run:path in line 22
 path <- "/Users/neslihanonay/Downloads/All_data_-__processed" #UPDATE IS NEEDED BEFORE RUNNING
 #we need to put the path name where all the files from MATLAB is stored.
 
-url_xlsx <- list.files(path, pattern = "*.xlsx", recursive = TRUE) #here there is a listing of all files with specific extention (xlsx) that we want to merge
+url_xlsx <- list.files(path, pattern = "*.xlsx", recursive = TRUE) #here there is a listing of all files with specific extention (xlsx) that we want to merge. IMPORTANT:Pay attention if you have just your data files in the path.
 read_xlsx_files <- function(x){
   df <- read_xlsx(path = paste(path, x, sep = "/"))
   return(df)
