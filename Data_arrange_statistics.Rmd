@@ -60,6 +60,9 @@ all <- all[, !duplicated(colnames(all))]
 all <- subset(all, select = -c(event_type))
 View(all)
 all = all %>% select(subj_number, everything()) #we moved the variable subj_number to the first order.
-write_xlsx(all, "/Users/neslihanonay/Desktop/Ulrike_internship/Data/Model/ALL_data.xlsx") #UPDATE IS NEEDED BEFORE RUNNING
+all$dep2_all <- all$all_data_DataDependency-all$all_data_IndepModelDependency
+all$dep2_negative <- all$emotional_DataDependency-all$emotional_IndepModelDependency
+all$dep2_neutral <- all$neutral_data_DataDependency-all$neutral_data_IndepModelDependency
+write_xlsx(all, "/Users/onay9/Desktop/Internship/Summaries/ALL_data_naps.xlsx") #UPDATE IS NEEDED BEFORE RUNNING
 ```
 
