@@ -1,3 +1,7 @@
+%%This code is modified version used in Bisby and colleagues study (2018).
+Original source is here; https://figshare.com/articles/software/Model_code/5240752?file=8956867
+
+
 T_D = readtable('subj109_disney.xlsx', 'Range', 'B1:G41') % range covers all data(including both emotional and neutral)
 T_mat_D=table2array(T_D);
 T_N_double = str2double (T_mat_D);
