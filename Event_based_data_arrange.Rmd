@@ -1,0 +1,51 @@
+---
+title: "Event_based_matrices"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This code is created to make matrices for every event for NAPS and Disney paradigms. In the pilot experiment, we have two paradigms each tested with nine subjects (n=9). So that, out input variable is: 18(9X2) excel files with the dimension of 40X7. Each row (n=40) stands for events. Variables are event_number, Ab, Ac...(possible pairs).
+
+In the end, we`ll have 40 files for each paradigm with the dimension of 9X7. Each row stands for each subject and variables are vent_number, Ab, Ac...(possible pairs). This matrices are allowing to run the script for dependency models in MATLAB.
+
+
+```{r pressure, echo=FALSE}
+install.packages(c("magittr", "writexl", "stringr", "tidyverse", "rprime", "rlist", "xlsx"))
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+path <- "/Users/neslihanonay/Desktop/Ulrike_internship/Event_Select/Processed_R" #my path where the all files are stored for each subject.
+url_xlsx <- list.files(path, pattern = "*.xlsx", recursive = TRUE)
+read_xlsx_files <- function(x){df <- read_xlsx(path = paste(path, x, sep = "/"))
+return(df)} #here, we write a function to read all excel files together.
+df <- lapply(url_xlsx, read_xlsx_files )#aiming to build list containing all files in R environment.
+df <- as.list(df) #we make our data frame as list in order to be able to commit further functions. List is containing 18 data frames (one for each subject)
+new_df <- to_data_frame(df)  #we make one data frame out of 18 files.
+disney_df <-new_df[c(1:360),] #here we created one data frame for Disney. 40 events X 9 subjects = 360 rows for Disney.
+naps_df<- new_df[c(361:720),] #here we created one data frame for NAPS 40 events X 9 subjects = 360 rows for Disney.
+split_disney <- split(disney_df, disney_df$event_number) #we splitted one data frame into multiple data frames, which each stores the different event data. 
+split_naps <- split(naps_df, naps_df$event_number) #we splitted one data frame into multiple data frames, which each stores the different event data. 
+
+output_csv <- function(data, names){ 
+  folder_path <- "/Users/neslihanonay/Desktop/Ulrike_internship/Event_Select/" #we specify path that we want to save our data. 
+   
+  write_csv(data, paste0(folder_path, "here_name_your_paradigms", names, ".csv")) #we are writing the data frame to our computer.
+} #output_csv is just one command, which is custom function to store all the data frames to Excel.
+
+list(data = split_disney,
+     names = names(split_disney)) %>% 
+  
+purrr::pmap(output_csv) #we are writing files to our computer.
+
+```
+
+
