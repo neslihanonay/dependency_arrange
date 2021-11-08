@@ -11,16 +11,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This code is created to make matrices for every event for NAPS and Disney paradigms. In the pilot experiment, we have two paradigms each tested with nine subjects (n=9). So that, out input variable is: 18(9X2) excel files with the dimension of 40X7. Each row (n=40) stands for events. Variables are event_number, Ab, Ac...(possible pairs).
 
-In the end, we`ll have 40 files for each paradigm with the dimension of 9X7. Each row stands for each subject and variables are vent_number, Ab, Ac...(possible pairs). This matrices are allowing to run the script for dependency models in MATLAB.
+In the end, we will have 40 files for each paradigm with the dimension of 9X7. Each row stands for each subject and variables are event_number, Ab, Ac...(possible pairs). This matrices are allowing to run the script for dependency models in MATLAB.
 
 
 ```{r pressure, echo=FALSE}
 install.packages(c("magittr", "writexl", "stringr", "tidyverse", "rprime", "rlist", "xlsx"))
 ```
 
-## Including Plots
+## In short; code is doing 1) upload Excels, 2) manipulate them in R environment 3)save them in required data format for further analysis. 
 
-You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
 path <- "/Users/neslihanonay/Desktop/Ulrike_internship/Event_Select/Processed_R" #my path where the all files are stored for each subject.
