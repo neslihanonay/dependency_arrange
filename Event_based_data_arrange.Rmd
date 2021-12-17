@@ -15,7 +15,14 @@ In the end, we will have 40 files for each paradigm with the dimension of 9X7. E
 
 
 ```{r pressure, echo=FALSE}
-install.packages(c("magittr", "writexl", "stringr", "tidyverse", "rprime", "rlist", "xlsx"))
+install.packages(c("magittr", "writexl", "stringr", "tidyverse", "rprime", "rlist", "xlsx", "readxl", "csv", "readr"))
+library("rprime")
+library("readxl")
+library("magrittr")
+library("dplyr")
+library("readr")
+library(writexl)
+install.packages("writexl")
 ```
 
 ## In short; code is doing 1) upload Excels, 2) manipulate them in R environment 3)save them in required data format for further analysis. 
